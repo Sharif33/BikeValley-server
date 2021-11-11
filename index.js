@@ -21,6 +21,7 @@ async function run() {
         const database = client.db('bikeManagement');
         const bikeCollection = database.collection('bikes');
         const MyOrder = database.collection('orders');
+        const Reviews = database.collection('reviews');
 
 
         // GET bikes
@@ -29,6 +30,7 @@ async function run() {
             const bikes = await cursor.toArray();
             res.send(bikes);
         });
+
 
         // GET Single bike
         app.get('/bikes/:id', async (req, res) => {
@@ -47,6 +49,23 @@ async function run() {
             console.log(result);
             res.json(result)
         });
+
+        // GET Reviews
+        app.get('/reviews', async (req, res) => {
+            const cursor = Reviews.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
+
+        // POST Review
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            console.log('hit the post api', review);
+            const result = await Reviews.insertOne(review);
+            console.log(result);
+            res.json(result)
+        });
+
     }
     finally {
         // await client.close();
