@@ -33,6 +33,15 @@ async function run() {
         });
 
 
+        // DELETE bikes from ManageProducts
+        app.delete('/bikes/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await bikeCollection.deleteOne(query);
+            res.json(result);
+        });
+
+
         // GET Single bike
         app.get('/bikes/:id', async (req, res) => {
             const id = req.params.id;
