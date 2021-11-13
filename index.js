@@ -155,7 +155,21 @@ async function run() {
             const updateDoc = { $set: { role: 'admin' } };
             const result = await usersCollection.updateOne(filter, updateDoc);
             res.json(result);
-        })
+        });
+
+        /*   // Update orders from ManageOrders
+          app.put('/orders/:id', (req, res) => {
+              const id = req.params.id;
+              const updateStatus = { _id: ObjectId(id) };
+              MyOrder.updateOne(filter, {
+                  $set: { status: updateStatus },
+              })
+                  .then(result => {
+                      res.send(result);
+                  });
+  
+          }); */
+
 
     }
     finally {
