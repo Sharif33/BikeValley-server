@@ -157,18 +157,32 @@ async function run() {
             res.json(result);
         });
 
-        /*   // Update orders from ManageOrders
-          app.put('/orders/:id', (req, res) => {
-              const id = req.params.id;
-              const updateStatus = { _id: ObjectId(id) };
-              MyOrder.updateOne(filter, {
-                  $set: { status: updateStatus },
-              })
-                  .then(result => {
-                      res.send(result);
-                  });
-  
-          }); */
+        //Update get
+        app.get('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const user = await MyOrder.findOne(query);
+            // console.log('load user with id: ', id);
+            res.send(user);
+        })
+
+        //  update
+        app.put("/updateStatus/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+
+            MyOrder
+                .updateOne(filter, {
+                    $set: {
+                        status: "Shipped"
+                    },
+                })
+                .then((result) => {
+                    res.send(result);
+                    console.log(result);
+                });
+
+        });
 
 
     }
